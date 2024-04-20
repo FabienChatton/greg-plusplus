@@ -1,2 +1,2 @@
 greg testVar = "test Greg";
-gregtech(greg);
+gregtech(testVar);

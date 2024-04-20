@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <setjmp.h>
 
-jmp_buf bufferEOF;
+#include "interpreter.h"
 
 char* getNextToken(char *source)
 {
@@ -13,7 +12,7 @@ char* getNextToken(char *source)
 	unsigned int i = 0;
 	int inString = 0;
 	int endStatement = 0;
-	
+
 	while (ptr < strlen(source) && i < 128)
 	{
 		currChar = source[ptr++];
@@ -32,7 +31,14 @@ char* getNextToken(char *source)
 		{
 			if (currChar == ' ')
 			{
-				break;
+				if (i == 0)
+				{
+					continue;
+				}
+				else
+				{
+					break;
+				}
 			}
 			else if (currChar == '\n')
 			{
@@ -78,22 +84,14 @@ char **getTokenList(char *source, int *tokenListSize)
 {
 	char **tokenListBuffer = malloc(128);
 	int i = 0;
-	int bufferSize = 0;
 	char *token;
-	do
+	while ((token = getNextToken(source)) != NULL)
 	{
-		token = getNextToken(source);
-		if (token == NULL || token == '\0')
-		{
-			break;
-		}
 		tokenListBuffer[i++] = token;
-		bufferSize += strlen(token);
-		
-	} while (token != NULL && token != '\0');
+	}
 	
 	
-	char **tokenList = malloc(bufferSize);
+	char **tokenList = malloc(i * sizeof(char*));
 	for (int k = 0; k < i; k++)	
 	{
 		tokenList[k] = tokenListBuffer[k];
@@ -123,6 +121,7 @@ char *readSourceFile(FILE *sourceFile)
 
 int main(int argc, char **argv)
 {
+
 	/*
 	if (argc == 1)
 	{
@@ -136,18 +135,21 @@ int main(int argc, char **argv)
 		fprintf(stderr, "can not open file %s", argv[1]);
 		exit(1);
 	}
-	
+
 	char *source = readSourceFile(sourceFile);
 	fclose(sourceFile);
 	
 	int tokenSize;
 	char **tokenList = getTokenList(source, &tokenSize);
 	
+	interpret(tokenList, tokenSize);
+	/*
 	for (int i = 0; i < tokenSize; i++)
 	{
 		printf("%s\n", tokenList[i]);
 	}
 	
 	free(tokenList);
+	*/
 	return 0;
 }
