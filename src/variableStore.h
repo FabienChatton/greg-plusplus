@@ -11,6 +11,7 @@ VariableStoreHead *createVariableStore();
 VariableStore *getVariableStore(VariableStoreHead *variableStoreHead, char *variableName);
 void addVariable(VariableStoreHead *variableStoreHead, char *variableName, void *variableValue);
 void *getVarValue(VariableStore *var);
+void setVarValue(VariableStore *varToSet, void *value);
 
 
 #endif // VARIABLE_STORE_H

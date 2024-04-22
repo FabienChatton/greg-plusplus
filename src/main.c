@@ -122,14 +122,12 @@ char *readSourceFile(FILE *sourceFile)
 int main(int argc, char **argv)
 {
 
-	/*
 	if (argc == 1)
 	{
-		fprintf(stderr, "require 1 argument");
+		fprintf(stderr, "add .greg++ file to arg please");
 		exit(1);
 	}
-	*/
-	FILE *sourceFile = fopen("test.greg++", "r");
+	FILE *sourceFile = fopen(argv[1], "r");
 	if (sourceFile == NULL)
 	{
 		fprintf(stderr, "can not open file %s", argv[1]);

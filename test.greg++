@@ -1,2 +1,8 @@
 greg testVar = "test Greg";
+greg aaa = testVar;
+
+gregtech("ggrggrgrGREGTECH");
+gregtech(aaa);
+
+greg testVar = "fumier";
 gregtech(testVar);

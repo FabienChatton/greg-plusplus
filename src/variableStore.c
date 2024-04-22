@@ -58,6 +58,11 @@ void *getVarValue(VariableStore *var)
 	return var->variableValue;
 }
 
+void setVarValue(VariableStore *varToSet, void *value)
+{
+	varToSet->variableValue = value;
+}
+
 /*
 void setVariableValue(VariableStoreHead *variableStoreHead, char *variableName, void *variableValue)
 {
